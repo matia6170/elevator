@@ -28,12 +28,12 @@ public class BuildingSetup{
 	public static void main(String[] args) {
 		
 		DrawBuilding s = new DrawBuilding();
-		Elevator elv = new Elevator();
+	//	Elevator elv = new Elevator();
 		
 		
 		
-		elv.setSize(420, 1000);
-		f.add(elv);
+		s.setSize(420, 1000);
+		f.add(s);
 		
 		/*
 		JPanel p = new JPanel();

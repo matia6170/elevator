@@ -15,6 +15,8 @@ import java.util.Map;
 
 import javax.swing.*;
 
+import elevator.Elevator;
+
 public class DrawBuilding extends supportMethods implements ActionListener {
 
 	
@@ -24,7 +26,7 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 	
 
 	private JLabel l = new JLabel("0");
-
+	
 	
 	public void paintComponent(Graphics g) {
 		
@@ -98,27 +100,13 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 		g2.fillRect(x, y, 40, 40);
 		
 		
-		JToggleButton toggleButton = new JToggleButton("Door");
-		ItemListener itemListener = new ItemListener() {
-		    public void itemStateChanged(ItemEvent itemEvent) {
-		        int state = itemEvent.getStateChange();
-		        if (state == ItemEvent.SELECTED) {
-		            System.out.println("Selected"); // show your message here
-		            openDoor = true;
-		            
-		        } else {
-		            System.out.println("Deselected"); // remove your message
-		            openDoor =false;
-		        }
-		    }
-		};
-		toggleButton.addItemListener(itemListener);
-		toggleButton.setBounds(500, 100, 70, 70);
 		
 		
-		l.setBounds(500, 62, 54, 21);
+		
+		l.setBounds(500, 62, 540, 21);
 		BuildingSetup.f.add(l);
-		BuildingSetup.f.add(toggleButton);
+		BuildingSetup.f.add(createDoorButton());
+		BuildingSetup.f.add(createOneButton());
 		t.start();
 	}
 	
@@ -126,18 +114,8 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 	
 
 	public void actionPerformed(ActionEvent e) {
-	/*
-		if(x==51) {
-			open = true;
-		}else if(x==0) open = false;
-		
-		if(open)
-			x-=1;
-		else
-			x+=1;
-		*/
+
 		if(openDoor&&x<=51) {
-			
 				x+=1;
 		}else if(!openDoor&&x>0) {
 			x--;
@@ -146,21 +124,22 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 		
 		if(y<=20) {
 			down = false;
-		}else if(y>=getLevelVal(772)) down = true;
+		}else if(y>=getLevelVal(5)) down = true;
 		
 		if(down)
 			y+=-vely;
 		else
 			y+=vely;
-		l.setText("y: " + Integer.toString(y) + ", " + Integer.toString(curFloor));
+		l.setText("y: " + Integer.toString(y) + ", original:" + Integer.toString(curFloor) + ", converted:" + Integer.toString(flipFloor(curFloor)));
 		
 		
-		gotoFloorFromTopToBottom(4);
+		getCurrentFloorLive();
+		gotoFloorFromTopToBottom(toWhichFloor);
 	//	System.out.println(getLevelVal(1));
 		repaint();
 	}
 
-	
+
 }
 
 	

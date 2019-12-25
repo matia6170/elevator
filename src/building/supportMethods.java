@@ -1,26 +1,57 @@
 package building;
 
-import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-public class supportMethods extends JPanel{
+import java.awt.event.*;  
+import javax.swing.*;    
+
+import elevator.Elevator;
+
+public class supportMethods extends Elevator{
 	
-	public static int numFloors = 5, curFloor = 1;
-	public boolean fireAlarm = false;
-	public	boolean open = false;
-	public boolean down = false,openDoor = false;
-	public int x = 0, y=0,velx=2,vely=4, floorDiff = 188, elvFloor=4;
+
+	
+	
+	public int flipFloor(int x) {
+		return 6-x;
+	}
+	
+	
+
+	public int getCurrentFloorLive() {
+		
+			if(floorCheck(y,getLevelVal(1))) {
+				curFloor = 1;
+			}else if(floorCheck(y,getLevelVal(2))) {
+				curFloor = 2;
+			}else if(floorCheck(y,getLevelVal(3))) {
+				curFloor = 3;
+			}else if(floorCheck(y,getLevelVal(4))) {
+				curFloor = 4;
+			}else if(floorCheck(y,getLevelVal(5))) {
+				curFloor = 5;
+			}
+			
+			return flipFloor(curFloor);
+		
+	}
 	
 	public void gotoFloorFromTopToBottom(int x) {
 		down = false;
+		x = flipFloor(x);
 	
 		if(floorCheck(y,getLevelVal(x))) {
 			vely=0;
+			
 			//System.out.println("col");
 		}
 	}
 	
 	public void gotoFloorFromBottomToTop(int x) {
 		down = true;
+		x = flipFloor(x);
 	
 		if(floorCheck(y,getLevelVal(x))) {
 			vely=0;
@@ -28,7 +59,7 @@ public class supportMethods extends JPanel{
 		}
 	}
 	
-	private boolean floorCheck(int x, int y) {
+	public boolean floorCheck(int x, int y) {
 		boolean retVal = false;
 		for(int i=0;i<5;i++) {
 			if((x+=i)==y) { 
@@ -48,7 +79,7 @@ public class supportMethods extends JPanel{
 	  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 	}
 	
-	protected int getLevelVal(int x) {
+	public int getLevelVal(int x) {
 		int retVal = 0;
 		for(int i = 1; i<=x; i++) {
 			retVal = 188*(i-1)+20;
@@ -57,4 +88,39 @@ public class supportMethods extends JPanel{
 		return retVal;
 		
 	}
+	
+
+	
+	public JToggleButton createDoorButton() {
+		JToggleButton doorButton = new JToggleButton("Door");
+		ItemListener itemListener = new ItemListener() {
+		    public void itemStateChanged(ItemEvent itemEvent) {
+		        int state = itemEvent.getStateChange();
+		        if (state == ItemEvent.SELECTED) {
+		            System.out.println("Selected"); // show your message here
+		            openDoor();
+		            
+		        } else {
+		            System.out.println("Deselected"); // remove your message
+		            closeDoor();
+		        }
+		    }
+		};
+		doorButton.addItemListener(itemListener);
+		doorButton.setBounds(500, 100, 70, 70);
+		
+		return doorButton;
+	}
+	public JButton createOneButton() {
+		JButton button = new JButton("1");
+		button.addActionListener(new ActionListener(){  
+			public void actionPerformed(ActionEvent e){  
+				toWhichFloor = 1;
+	        }  
+	    });  
+		button.setBounds(500, 200, 70, 70);
+		
+		return button;
+	}
+	
 }

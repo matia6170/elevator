@@ -1,9 +1,17 @@
 package elevator;
 
-import building.DrawBuilding;
+import javax.swing.JPanel;
 
-public class Elevator extends DrawBuilding{
+import building.DrawBuilding;
+import building.supportMethods;
+
+public class Elevator extends JPanel{
 	
+	public int numFloors = 5, curFloor = 1;
+	public boolean fireAlarm = false;
+	public	boolean open = false;
+	public boolean down = false,openDoor = false;
+	public int  floorDiff = 188, elvFloor=4,x = 0, y=floorDiff*(6-4-1)-20,velx=2,vely=4,toWhichFloor=2;
 	
 	public Elevator(){
 		
@@ -22,6 +30,7 @@ public class Elevator extends DrawBuilding{
 	}
 	
 	public boolean isFireAlarmOn() {
+		
 		return fireAlarm;
 	}
 	
@@ -58,19 +67,10 @@ public class Elevator extends DrawBuilding{
 	
 	public void status() {
 		System.out.printf("Current Floor: %d, Number of Floors: %d\nFireAlarm: %b, DoorOpen: %b\n", getCurFloor(), getNumFloor(), isFireAlarmOn(), isDoorOpen());
+		
 	}
 	
 
 
-	public static void main(String[] args) {
-		Elevator e = new Elevator();
-		
-		e.status();
-		e.gotoFloor(3);
-		e.status();
-		e.fireAlarm();
-		e.status();
-		
-		
-	}
+
 }
