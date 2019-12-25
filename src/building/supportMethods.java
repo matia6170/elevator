@@ -7,7 +7,7 @@ public class supportMethods extends JPanel{
 	public static int numFloors = 5, curFloor = 1;
 	public boolean fireAlarm = false;
 	public	boolean open = false;
-	public boolean down = false,openDoor = true;
+	public boolean down = false,openDoor = false;
 	public int x = 0, y=0,velx=2,vely=4, floorDiff = 188, elvFloor=4;
 	
 	public void gotoFloorFromTopToBottom(int x) {
