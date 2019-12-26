@@ -1,6 +1,8 @@
 package building;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -24,7 +26,9 @@ public class supportMethods extends Elevator{
 		return 6-x;
 	}
 	
-	
+	public int getCurrentFloor() {
+		return flipFloor(curFloor);
+	}
 
 	public int getCurrentFloorLive() {
 		
@@ -175,12 +179,49 @@ public class supportMethods extends Elevator{
 	ArrayList<JLabel> floorLabel = new ArrayList<JLabel>();	
 	public void levelLabel() {
 		for(int i = 1; i<=5;i++) {
-			floorLabel.add(new JLabel(Integer.toString(i)));
+			floorLabel.add(new JLabel("  Floor " + Integer.toString(flipFloor(i))));
 		}
 		for(int i = 1; i<=5;i++) {
-			floorLabel.get(i).setBounds(100, 100, 50, 50);
+			floorLabel.get(i-1).setBounds(210, (floorDiff*i)-158, 50, 30);
+			floorLabel.get(i-1).setOpaque(true);
 		}
 		
 	}
+	
+	ArrayList<JButton> callButton = new ArrayList<JButton>();
+	public void callButton() {
+		for(int i = 1; i<=5;i++) {
+			int j = flipFloor(i);
+			JButton but = new JButton("¡Ü");
+			//but.setFont(new Font("Arial", Font.PLAIN, 10));
+			but.setMargin(new Insets(0, 0, 0, 0));
+			but.addActionListener(new ActionListener(){  
+				public void actionPerformed(ActionEvent e){  
+					
+					toWhichFloor = j;
+		        }  
+		    });  
+			callButton.add(but);
+		}
+		for(int i = 1; i<=5;i++) {
+			callButton.get(i-1).setBounds(210, (floorDiff*i)-70, 25, 25);
+		}
+		
+	}
+	
+	ArrayList<JLabel> elvLocLabel = new ArrayList<JLabel>();	
+	JLabel elvLevel = new JLabel(Integer.toString(getCurrentFloor()));
+	public void levelLocLabel() {
+		for(int i = 1; i<=5;i++) {
+			elvLocLabel.add(new JLabel(" " + Integer.toString(curFloor)));
+		}
+		for(int i = 1; i<=5;i++) {
+			elvLocLabel.get(i-1).setBounds(210, (floorDiff*i)-100, 25, 20);
+			elvLocLabel.get(i-1).setOpaque(true);
+		}
+		
+	}
+	
+	
 	
 }

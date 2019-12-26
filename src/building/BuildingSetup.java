@@ -45,10 +45,10 @@ public class BuildingSetup extends DrawBuilding{
 			
 			
 			
-			uiMannager.setSize(180, 1000);
-			uiMannager.setLocation(420, 0);
-			uiMannager.createButtons();
-			uiMannager.setLayout(null);
+			//uiMannager.setSize(180, 1000);
+			//uiMannager.setLocation(420, 0);
+			//uiMannager.createButtons();
+			//uiMannager.setLayout(null);
 			//f.add(uiMannager);
 			//DrawBuilding.restasdads = 0;
 			s.setLayout(null);

@@ -1,9 +1,10 @@
 package building;
 
-
+import java.awt.*;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -29,18 +30,20 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 
 	private JLabel l = new JLabel("0");
 	
-    private Rectangle rect = new Rectangle(0, 0, 200, 30);
-  
-	private ColouredRectangle label= new ColouredRectangle("LABEL 1");
+   
 	
 	JButton testButton = new JButton("test");
 	
-	public	UI uiMannager = new UI();
+	//public	UI uiMannager = new UI();
 	
 	public int runOnce = 0;
 	
 	public void runOnce() {
+		
 		if(runOnce==0) {
+			levelLabel();
+			levelLocLabel();
+			callButton();
 			
 			testButton.addActionListener(new ActionListener(){  
 				public void actionPerformed(ActionEvent e){  
@@ -48,7 +51,7 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 		        }  
 		    });  
 			testButton.setBounds(200,200,50,50);
-			add(testButton);
+			//add(testButton);
 			
 			l.setBounds(300, 62, 540, 21);
 			 l.setOpaque(true);
@@ -60,6 +63,15 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 			add(createThreeButton());
 			add(createFourButton());
 			add(createFiveButton());
+			for(int i = 0; i<5;i++) {
+				add(floorLabel.get(i));
+				add(elvLocLabel.get(i));
+				add(callButton.get(i));
+				elvLocLabel.get(i).setFont(new Font("Consolas", Font.BOLD, 20));
+				elvLocLabel.get(i).setBackground(Color.BLACK);
+				elvLocLabel.get(i).setForeground(Color.RED);
+				//System.out.println(floorLabel.size());
+			}
 		}
 	}
 	
@@ -75,7 +87,6 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 		Graphics2D g2 = (Graphics2D)g;
 		Color oldC = g2.getColor();
 	
-		add(label);
 		//elevator
 		g2.setColor(new Color(26367));
 		Stroke oldStroke = g2.getStroke();
@@ -153,18 +164,23 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 
+		//doorCtrl
+		
+		
+		
 		if(isDoorOpen()&&x<=51) {
 				x+=1;
 		}else if(!isDoorOpen()&&x>0) {
 			x--;
 		}
-		
-		
 			y+=vely;
 		
-		l.setText("y: " + Integer.toString(y) + ", original:" + Integer.toString(curFloor) + ", converted:" + Integer.toString(flipFloor(curFloor)));
-		label.label.setText(Integer.toString(y));
+			//text
+		l.setText("y: " + Integer.toString(y) + ", original:" + Integer.toString(curFloor) + ", converted:" + Integer.toString(getCurrentFloor()));
+		for(int i = 0;i<5;i++)
+			elvLocLabel.get(i).setText("0" + Integer.toString(getCurrentFloor()));
 		
+		//level
 		if(getCurrentFloorLive()>toWhichFloor) {
 			vely = 4;
 			gotoFloorFromTopToBottom(toWhichFloor);
