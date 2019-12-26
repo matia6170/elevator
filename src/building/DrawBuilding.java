@@ -35,6 +35,37 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 	
 	JButton testButton = new JButton("test");
 	
+	public	UI uiMannager = new UI();
+	
+	public int runOnce = 0;
+	
+	public void runOnce() {
+		if(runOnce==0) {
+			
+			testButton.addActionListener(new ActionListener(){  
+				public void actionPerformed(ActionEvent e){  
+					toWhichFloor = 3;
+		        }  
+		    });  
+			testButton.setBounds(200,200,50,50);
+			add(testButton);
+			
+			l.setBounds(300, 62, 540, 21);
+			 l.setOpaque(true);
+		        
+			add(l);
+			add(createDoorButton());
+			add(createOneButton());
+			add(createTwoButton());
+			add(createThreeButton());
+			add(createFourButton());
+			add(createFiveButton());
+		}
+	}
+	
+	
+
+	
 	public void paintComponent(Graphics g) {
 		
 		
@@ -108,29 +139,13 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 		g2.fillRect(x, y, 40, 40);
 		
 		
+		runOnce();
 		
 		
-		testButton.addActionListener(new ActionListener(){  
-			public void actionPerformed(ActionEvent e){  
-				toWhichFloor = 3;
-	        }  
-	    });  
-		testButton.setBounds(200,200,50,50);
-		add(testButton);
-		
-		l.setBounds(300, 62, 540, 21);
-		 l.setOpaque(true);
-	        
-		add(l);
-		add(createDoorButton());
-		add(createOneButton());
-		add(createTwoButton());
-		add(createThreeButton());
-		add(createFourButton());
-		add(createFiveButton());
 		
 		setVisible(true);
 		t.start();
+		runOnce++;
 	}
 	
 	//update
@@ -162,7 +177,7 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 		
 		getCurrentFloorLive();
 		
-	//	System.out.println(getLevelVal(1));
+		//System.out.println(toWhichFloor);
 		repaint();
 		validate();
 		setVisible(true);
