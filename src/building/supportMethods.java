@@ -3,7 +3,7 @@ package building;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
+import java.util.ArrayList;
 import java.awt.event.*;  
 import javax.swing.*;    
 
@@ -11,7 +11,13 @@ import elevator.Elevator;
 
 public class supportMethods extends Elevator{
 	
-
+	JToggleButton doorButton = new JToggleButton("Door");
+	JButton button1 = new JButton("1");
+	JButton button2 = new JButton("2");
+	JButton button3 = new JButton("3");
+	JButton button4 = new JButton("4");
+	JButton button5 = new JButton("5");
+	
 	
 	
 	public int flipFloor(int x) {
@@ -92,8 +98,9 @@ public class supportMethods extends Elevator{
 
 	
 	public JToggleButton createDoorButton() {
-		JToggleButton doorButton = new JToggleButton("Door");
-		ItemListener itemListener = new ItemListener() {
+		
+		//ItemListener itemListener = 
+		doorButton.addItemListener(new ItemListener() {
 		    public void itemStateChanged(ItemEvent itemEvent) {
 		        int state = itemEvent.getStateChange();
 		        if (state == ItemEvent.SELECTED) {
@@ -105,22 +112,75 @@ public class supportMethods extends Elevator{
 		            closeDoor();
 		        }
 		    }
-		};
-		doorButton.addItemListener(itemListener);
+		});
 		doorButton.setBounds(500, 100, 70, 70);
 		
 		return doorButton;
 	}
 	public JButton createOneButton() {
-		JButton button = new JButton("1");
-		button.addActionListener(new ActionListener(){  
+		
+		button1.addActionListener(new ActionListener(){  
 			public void actionPerformed(ActionEvent e){  
 				toWhichFloor = 1;
+				System.out.println("goint to first floor");
 	        }  
 	    });  
-		button.setBounds(500, 200, 70, 70);
+		button1.setBounds(500, 200, 70, 70);
+		button1.repaint();
+		return button1;
+	}
+	public JButton createTwoButton() {
+		button2.addActionListener(new ActionListener(){  
+			public void actionPerformed(ActionEvent e){  
+				toWhichFloor = 2;
+	        }  
+	    });  
+		button2.setBounds(500, 300, 70, 70);
 		
-		return button;
+		
+		return button2;
+	}
+	public JButton createThreeButton() {
+		button3.addActionListener(new ActionListener(){  
+			public void actionPerformed(ActionEvent e){  
+				toWhichFloor = 3;
+	        }  
+	    });  
+		button3.setBounds(500, 400, 70, 70);
+		button3.repaint();
+		return button3;
+	}
+	public JButton createFourButton() {
+		
+		button4.addActionListener(new ActionListener(){  
+			public void actionPerformed(ActionEvent e){  
+				toWhichFloor = 4;
+	        }  
+	    });  
+		button4.setBounds(500, 500, 70, 70);
+		button4.repaint();
+		return button4;
+	}
+	public JButton createFiveButton() {
+		
+		button5.addActionListener(new ActionListener(){  
+			public void actionPerformed(ActionEvent e){  
+				toWhichFloor = 5;
+	        }  
+	    });  
+		button5.setBounds(500, 600, 70, 70);
+		button5.repaint();
+		return button5;
+	}
+	ArrayList<JLabel> floorLabel = new ArrayList<JLabel>();	
+	public void levelLabel() {
+		for(int i = 1; i<=5;i++) {
+			floorLabel.add(new JLabel(Integer.toString(i)));
+		}
+		for(int i = 1; i<=5;i++) {
+			floorLabel.get(i).setBounds(100, 100, 50, 50);
+		}
+		
 	}
 	
 }

@@ -3,6 +3,7 @@ package building;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.*;
@@ -27,6 +29,11 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 
 	private JLabel l = new JLabel("0");
 	
+    private Rectangle rect = new Rectangle(0, 0, 200, 30);
+  
+	private ColouredRectangle label= new ColouredRectangle("LABEL 1");
+	
+	JButton testButton = new JButton("test");
 	
 	public void paintComponent(Graphics g) {
 		
@@ -37,6 +44,7 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 		Graphics2D g2 = (Graphics2D)g;
 		Color oldC = g2.getColor();
 	
+		add(label);
 		//elevator
 		g2.setColor(new Color(26367));
 		Stroke oldStroke = g2.getStroke();
@@ -72,7 +80,7 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 		g2.draw(eDoorR2);
 		
 		//building
-		g2.setColor(oldC);
+		g2.setColor(Color.GRAY);
 		g2.fillRect(0,0,400,20);
 		g2.fillRect(400,0,20,1000);
 		g2.fillRect(0,0,20,1000);
@@ -102,11 +110,26 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 		
 		
 		
+		testButton.addActionListener(new ActionListener(){  
+			public void actionPerformed(ActionEvent e){  
+				toWhichFloor = 3;
+	        }  
+	    });  
+		testButton.setBounds(200,200,50,50);
+		add(testButton);
 		
-		l.setBounds(500, 62, 540, 21);
-		BuildingSetup.f.add(l);
-		BuildingSetup.f.add(createDoorButton());
-		BuildingSetup.f.add(createOneButton());
+		l.setBounds(300, 62, 540, 21);
+		 l.setOpaque(true);
+	        
+		add(l);
+		add(createDoorButton());
+		add(createOneButton());
+		add(createTwoButton());
+		add(createThreeButton());
+		add(createFourButton());
+		add(createFiveButton());
+		
+		setVisible(true);
 		t.start();
 	}
 	
@@ -115,31 +138,60 @@ public class DrawBuilding extends supportMethods implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 
-		if(openDoor&&x<=51) {
+		if(isDoorOpen()&&x<=51) {
 				x+=1;
-		}else if(!openDoor&&x>0) {
+		}else if(!isDoorOpen()&&x>0) {
 			x--;
 		}
 		
 		
-		if(y<=20) {
-			down = false;
-		}else if(y>=getLevelVal(5)) down = true;
-		
-		if(down)
-			y+=-vely;
-		else
 			y+=vely;
-		l.setText("y: " + Integer.toString(y) + ", original:" + Integer.toString(curFloor) + ", converted:" + Integer.toString(flipFloor(curFloor)));
 		
+		l.setText("y: " + Integer.toString(y) + ", original:" + Integer.toString(curFloor) + ", converted:" + Integer.toString(flipFloor(curFloor)));
+		label.label.setText(Integer.toString(y));
+		
+		if(getCurrentFloorLive()>toWhichFloor) {
+			vely = 4;
+			gotoFloorFromTopToBottom(toWhichFloor);
+		}else if(getCurrentFloorLive()<toWhichFloor) {
+			vely=-4;
+			gotoFloorFromBottomToTop(toWhichFloor);
+		}else if(getCurrentFloorLive()==toWhichFloor) {
+			vely=0;
+		}
 		
 		getCurrentFloorLive();
-		gotoFloorFromTopToBottom(toWhichFloor);
+		
 	//	System.out.println(getLevelVal(1));
 		repaint();
+		validate();
+		setVisible(true);
 	}
 
 
 }
 
+class ColouredRectangle extends JPanel
+{
+
+    private String text;
+
+    JLabel label;
+
+    public ColouredRectangle(String text
+                                     )
+    {
+       
+        this.text = text;
+       
+
+        label = new JLabel(this.text);
+        label.setOpaque(false);
+       
+
+        add(label);
+    }
+
+  
+}
 	

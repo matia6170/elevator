@@ -11,7 +11,7 @@ public class Elevator extends JPanel{
 	public boolean fireAlarm = false;
 	public	boolean open = false;
 	public boolean down = false,openDoor = false;
-	public int  floorDiff = 188, elvFloor=4,x = 0, y=floorDiff*(6-4-1)-20,velx=2,vely=4,toWhichFloor=2;
+	public int  floorDiff = 188, elvFloor=4,x = 0, y=Math.abs(floorDiff*(6-5-1)-20),velx=2,vely=4,toWhichFloor=5;
 	
 	public Elevator(){
 		

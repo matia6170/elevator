@@ -2,8 +2,10 @@ package building;
 
 
 import java.awt.BasicStroke;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -32,8 +34,7 @@ public class BuildingSetup{
 		
 		
 		
-		s.setSize(420, 1000);
-		f.add(s);
+		
 		
 		/*
 		JPanel p = new JPanel();
@@ -44,12 +45,23 @@ public class BuildingSetup{
 		f.add(p);
 		*/
 		
+		//f.setMinimumSize(new Dimension(600, 1000));
 		f.setLayout(null);
 		f.setVisible(true);
+		f.pack();
+		 f.setLocationRelativeTo(null);
 		f.setSize(600,1000);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setTitle("moving box");
+		f.setTitle("elevator");
+		f.setLocation(0, 0);
+		f.setVisible(true);
+		
+		
+		s.setSize(600, 1000);
+		f.add(s);
 	}
+	
+	
 
 	
 }
